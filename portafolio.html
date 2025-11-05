@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio | Webissor Design</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #050510;
+            color: #f0f8ff;
+            min-height: 100vh;
+        }
+
+        /* Header Simple */
+        header {
+            background: #0a0a16;
+            padding: 1rem 5%;
+            border-bottom: 1px solid #00f3ff;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00f3ff;
+        }
+
+        .logo img {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+        }
+
+        /* Contenido Principal */
+        .portfolio-container {
+            max-width: 1200px;
+            margin: 80px auto 0;
+            padding: 2rem;
+        }
+
+        .portfolio-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            color: #00f3ff;
+        }
+
+        /* Grid de Imágenes */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            padding: 1rem 0;
+        }
+
+        .image-item {
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            background: rgba(10, 10, 22, 0.5);
+            box-shadow: 0 4px 15px rgba(0, 243, 255, 0.1);
+            position: relative;
+        }
+
+        .image-item:hover {
+            transform: translateY(-5px);
+            border-color: #00f3ff;
+            box-shadow: 0 8px 25px rgba(0, 243, 255, 0.2);
+        }
+
+        .image-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .image-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Footer Simple */
+        footer {
+            background: #0a0a16;
+            padding: 2rem 5%;
+            text-align: center;
+            margin-top: 3rem;
+            border-top: 1px solid #00f3ff;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .social-links a {
+            color: #00f3ff;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #ff00e6;
+        }
+
+        /* Modal para imagen en pantalla completa */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(5, 5, 16, 0.95);
+            z-index: 2000;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90vh;
+            position: relative;
+            animation: zoomIn 0.3s ease;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.2);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #00f3ff;
+            font-size: 2rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(10, 10, 22, 0.8);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: #00f3ff;
+            color: #0a0a16;
+            transform: rotate(90deg);
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            pointer-events: none;
+        }
+
+        .modal-nav button {
+            background: rgba(10, 10, 22, 0.8);
+            color: #00f3ff;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .modal-nav button:hover {
+            background: #00f3ff;
+            color: #0a0a16;
+            transform: scale(1.1);
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .image-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 0.5rem;
+            }
+            
+            .image-item img {
+                height: 150px;
+            }
+            
+            .portfolio-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .image-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <img src="IMAGENES/Dise%C3%B1o%20sin%20t%C3%ADtulo.png" alt="Webissor Design">
+            <span>Webissor Design</span>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <div class="portfolio-container">
+        <h1 class="portfolio-title">Portafolio - 69 Proyectos</h1>
+        
+        <!-- Grid de Imágenes -->
+        <div class="image-grid" id="imageGrid">
+            <!-- Las imágenes se generarán automáticamente con JavaScript -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <!-- Modal para imagen en pantalla completa -->
+    <div class="modal" id="imageModal">
+        <span class="close-modal" id="closeModal">
+            <i class="fas fa-times"></i>
+        </span>
+        <div class="modal-content">
+            <img src="" alt="" id="modalImage">
+        </div>
+        <div class="modal-nav">
+            <button id="prevImage"><i class="fas fa-chevron-left"></i></button>
+            <button id="nextImage"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="logo">
+            <img src="IMAGENES/Dise%C3%B1o%20sin%20t%C3%ADtulo.png" alt="Webissor Design">
+            <span>Webissor Design</span>
+        </div>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p>© 2023 Webissor Design. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const imageGrid = document.getElementById('imageGrid');
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const closeModal = document.getElementById('closeModal');
+            const prevButton = document.getElementById('prevImage');
+            const nextButton = document.getElementById('nextImage');
+            let currentImageIndex = 0;
+            
+            // Array con todas las imágenes organizadas por categorías
+            const portfolioImages = [
+                // E-cards General
+                ...Array.from({length: 54}, (_, i) => ({
+                    url: `IMAGENES/Copia de Ecard  General/${i + 1}.png`,
+                    category: 'E-card',
+                    number: i + 1
+                })),
+                
+                // Logos
+                ...Array.from({length: 4}, (_, i) => ({
+                    url: `IMAGENES/LOGOS/logo ${i + 1}.png`,
+                    category: 'Logo',
+                    number: i + 1
+                })),
+                
+                // Web Designs
+                ...Array.from({length: 4}, (_, i) => ({
+                    url: `IMAGENES/WEBISSSOR WEB/${i + 1}.png`,
+                    category: 'Web Design',
+                    number: i + 1
+                }))
+            ];
+            
+            // Actualizar el título con el número correcto de proyectos
+            const portfolioTitle = document.querySelector('.portfolio-title');
+            portfolioTitle.textContent = `Portafolio - ${portfolioImages.length} Proyectos`;
+            
+            // Crear y añadir cada imagen al grid
+            portfolioImages.forEach((image, index) => {
+                const imageItem = document.createElement('div');
+                imageItem.className = 'image-item';
+                
+                imageItem.innerHTML = `
+                    <img src="${image.url}" alt="${image.category} ${image.number}">
+                `;
+                
+                // Agregar evento click para abrir el modal
+                imageItem.addEventListener('click', () => {
+                    openModal(index);
+                });
+                
+                imageGrid.appendChild(imageItem);
+            });
+
+            // Funciones para el modal
+            function openModal(index) {
+                currentImageIndex = index;
+                updateModalImage();
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModalHandler() {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            function updateModalImage() {
+                const image = portfolioImages[currentImageIndex];
+                modalImage.src = image.url;
+                modalImage.alt = `${image.category} ${image.number}`;
+            }
+
+            function nextImage() {
+                currentImageIndex = (currentImageIndex + 1) % portfolioImages.length;
+                updateModalImage();
+            }
+
+            function prevImage() {
+                currentImageIndex = (currentImageIndex - 1 + portfolioImages.length) % portfolioImages.length;
+                updateModalImage();
+            }
+
+            // Event Listeners
+            closeModal.addEventListener('click', closeModalHandler);
+            nextButton.addEventListener('click', nextImage);
+            prevButton.addEventListener('click', prevImage);
+
+            // Cerrar con tecla ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('active')) {
+                    closeModalHandler();
+                }
+                if (e.key === 'ArrowRight' && modal.classList.contains('active')) {
+                    nextImage();
+                }
+                if (e.key === 'ArrowLeft' && modal.classList.contains('active')) {
+                    prevImage();
+                }
+            });
+
+            // Cerrar al hacer clic fuera de la imagen
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModalHandler();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

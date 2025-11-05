@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webissor Design | Diseño Gráfico Profesional</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables de colores y estilos */
+        :root {
+            --primary: #00f3ff;
+            --secondary: #ff00e6;
+            --accent: #9d00ff;
+            --dark: #0a0a16;
+            --darker: #050510;
+            --light: #f0f8ff;
+            --card-bg: rgba(10, 10, 22, 0.7);
+            --glow: 0 0 15px var(--primary);
+            --transition: all 0.3s ease;
+        }
+
+        /* Reset y estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--darker);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Fondo animado */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(125deg, var(--darker) 0%, var(--dark) 100%);
+        }
+
+        .grid-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.3;
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--primary);
+            top: 10%;
+            left: 10%;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            background: var(--secondary);
+            top: 60%;
+            right: 10%;
+            animation: float 12s infinite ease-in-out reverse;
+        }
+
+        .shape-3 {
+            width: 250px;
+            height: 250px;
+            background: var(--accent);
+            bottom: 10%;
+            left: 20%;
+            animation: float 18s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            25% { transform: translateY(-20px) translateX(10px); }
+            50% { transform: translateY(0) translateX(20px); }
+            75% { transform: translateY(20px) translateX(10px); }
+        }
+
+        /* Header y navegación */
+        header {
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(5, 5, 16, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 243, 255, 0.1);
+            transition: var(--transition);
+            height: 80px;
+        }
+
+        header.scrolled {
+            padding: 1rem 5%;
+            background: rgba(5, 5, 16, 0.95);
+            height: 70px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: 40px;
+            object-fit: cover;
+            border-radius: 50%;
+            display: inline-block;
+            transition: var(--transition);
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            color: var(--dark);
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: var(--glow);
+            display: inline-block;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        /* Portada Principal */
+        .hero-image {
+            width: 100%;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: scaleImage 20s ease-in-out infinite;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(5, 5, 16, 0.7), rgba(5, 5, 16, 0.9));
+        }
+
+        @keyframes scaleImage {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .cover {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .cover-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 3;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cover h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            margin-top: 1rem;
+        }
+
+        .cover h1 .highlight {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: block;
+        }
+
+        .cover-tagline {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: rgba(240, 248, 255, 0.8);
+        }
+
+        .cover-description {
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            color: rgba(240, 248, 255, 0.7);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cover-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--light);
+            border: 2px solid var(--primary);
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 243, 255, 0.1);
+            box-shadow: var(--glow);
+        }
+
+        .cover-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .stat {
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .stat:nth-child(1) { animation-delay: 0.3s; }
+        .stat:nth-child(2) { animation-delay: 0.5s; }
+        .stat:nth-child(3) { animation-delay: 0.7s; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: rgba(240, 248, 255, 0.7);
+        }
+
+        /* Sección de Servicios en Portada */
+        .services-preview {
+            padding: 5rem 5%;
+            background: rgba(5, 5, 16, 0.5);
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: var(--transition);
+            border: 1px solid rgba(0, 243, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--glow);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Secciones de Portafolio - CON IMÁGENES EDITABLES */
+        .portfolio-section {
+            padding: 5rem 5%;
+            background: rgba(5, 5, 16, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .portfolio-section:nth-child(even) {
+            background: rgba(5, 5, 16, 0.5);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .portfolio-item {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid rgba(0, 243, 255, 0.1);
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--glow);
+        }
+
+        .portfolio-image {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .portfolio-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .portfolio-item:hover .portfolio-image img {
+            transform: scale(1.05);
+        }
+
+        .portfolio-content {
+            padding: 1.5rem;
+        }
+
+        .portfolio-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(5, 5, 16, 0.9);
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 1px solid rgba(0, 243, 255, 0.1);
+            margin-top: auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(0, 243, 255, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 1.3rem;
+        }
+
+        .social-link.facebook:hover {
+            background: #1877f2;
+            color: white;
+        }
+
+        .social-link.whatsapp:hover {
+            background: #25d366;
+            color: white;
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            color: rgba(240, 248, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .cover-content {
+                max-width: 100%;
+            }
+            
+            .cover h1 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem 5%;
+                height: auto;
+                min-height: 80px;
+            }
+            
+            header.scrolled {
+                height: auto;
+                min-height: 70px;
+            }
+            
+            .cover {
+                padding-top: 120px;
+            }
+            
+            nav ul {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .cover h1 {
+                font-size: 2.2rem;
+                margin-top: 0.5rem;
+            }
+            
+            .cover-tagline {
+                font-size: 1.1rem;
+            }
+            
+            .cover-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .cover-stats {
+                flex-wrap: wrap;
+                gap: 1.5rem;
+            }
+            
+            .logo-text {
+                font-size: 1.3rem;
+            }
+            
+            .cta-button {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cover h1 {
+                font-size: 1.8rem;
+            }
+            
+            .logo-text {
+                font-size: 1.2rem;
+            }
+            
+            .cover {
+                padding-top: 140px;
+            }
+            
+            .cover-stats {
+                gap: 1rem;
+            }
+            
+            .stat-number {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            nav ul {
+                gap: 0.5rem;
+            }
+            
+            nav a {
+                font-size: 0.8rem;
+            }
+            
+            .cover {
+                padding-top: 160px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fondo animado -->
+    <div class="background">
+        <div class="grid-lines"></div>
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="logo-container">
+            <img src="IMAGENES/Dise%C3%B1o%20sin%20t%C3%ADtulo.png" alt="Webissor Design" class="logo-img">
+            <div class="logo-text">Webissor Design</div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="portafolio.html">Portafolio</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+        <a href="#contacto" class="cta-button">Comenzar Proyecto</a>
+    </header>
+
+    <!-- Portada Principal -->
+    <div class="hero-image">
+        <img src="IMAGENES/portada.png" alt="Portada Webissor Design">
+        <div class="hero-overlay"></div>
+    </div>
+    <section class="cover" id="inicio">
+        <div class="cover-content">
+            <h1>
+                <span class="highlight">Diseño Gráfico</span>
+                que Impulsa tu Marca
+            </h1>
+            
+            <div class="cover-tagline">
+                Creamos identidades visuales impactantes que conectan con tu audiencia
+            </div>
+            
+            <div class="cover-description">
+                Especialistas en diseño de portadas, creación de logos, banners y flayers. 
+                Transformamos tus ideas en realidades visuales que destacan en el mercado.
+            </div>
+            
+            <div class="cover-buttons">
+                <a href="#servicios" class="cta-button">Ver Servicios</a>
+                <a href="portafolio.html" class="btn-secondary">Explorar Portafolio</a>
+            </div>
+            
+            <div class="cover-stats">
+                <div class="stat">
+                    <div class="stat-number">150+</div>
+                    <div class="stat-label">Proyectos Completados</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Clientes Satisfechos</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">5+</div>
+                    <div class="stat-label">Años de Experiencia</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Servicios en Portada -->
+    <section class="services-preview" id="servicios">
+        <div class="section-title">
+            <h2>Nuestros Servicios</h2>
+            <p>Soluciones creativas para todas tus necesidades visuales</p>
+        </div>
+        
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-palette"></i></div>
+                <h3>Diseño de Portadas</h3>
+                <p>Creación de portadas impactantes para redes sociales, álbumes, libros, podcasts y más.</p>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-pen-nib"></i></div>
+                <h3>Creación de Logos</h3>
+                <p>Desarrollo de identidades visuales únicas y memorables que representan tu marca.</p>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-object-group"></i></div>
+                <h3>Banners y Flayers</h3>
+                <p>Diseño de banners publicitarios y flayers atractivos para web, redes sociales y eventos.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Portafolio - Diseño de Portadas -->
+    <section class="portfolio-section" id="portafolio-diseno">
+        <div class="section-title">
+            <h2>Diseño de Portadas</h2>
+            <p>Explora nuestros trabajos más recientes en diseño de portadas</p>
+        </div>
+        
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <div class="portfolio-image">
+                    <!-- CAMBIAR IMAGEN: Reemplaza la URL por tu imagen -->
+                    <img src="/Webbissor design/IMAGENES/WEBISSSOR WEB/1.png" alt="Portada Álbum Musical">
+                </div>
+                <div class="portfolio-content">
+                    <h4>Portadas Para "Facebook"</h4>
+                    <p>Diseño futurista para Portadas de facebook, que conecta y comunican globalmente..</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item">
+                <div class="portfolio-image">
+                    <!-- CAMBIAR IMAGEN: Reemplaza la URL por tu imagen -->
+                    <img src="/Webbissor design/IMAGENES/WEBISSSOR WEB/2.png" alt="Portada Redes Sociales">
+                </div>
+                <div class="portfolio-content">
+                    <h4>Portadas Para "TikTok"</h4>
+                    <p>Portada para TikTok modernas y minimalista.</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item">
+                <div class="portfolio-image">
+                    <!-- CAMBIAR IMAGEN: Reemplaza la URL por tu imagen -->
+                    <img src="/Webbissor design/IMAGENES/WEBISSSOR WEB/3.png" alt="Portada de Libro">
+                </div>
+                <div class="portfolio-content">
+                    <h4>Portadas Para "youtube"</h4>
+                    <p>Diseño Para youtube con elementos simbólicos que representan la trama divercion y dinámismo.</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item">
+                <div class="portfolio-image">
+                    <!-- CAMBIAR IMAGEN: Reemplaza la URL por tu imagen -->
+                    <img src="/Webbissor design/IMAGENES/WEBISSSOR WEB/4.png" alt="Portada Podcast">
+                </div>
+                <div class="portfolio-content">
+                    <h4>Portadas Para "instagram"</h4>
+                    <p>Identidad visual para instagram con innovación creatividad y con estilo visual.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Portafolio - Creación de Logos -->
+    <section class="portfolio-section" id="portafolio-logos">
+        <div class="section-title">
+            <h2>Creación de Logos</h2>
+            <p>Identidades visuales únicas para marcas memorables</p>
+        </div>
+        
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <div class="portfolio-image">
+                    <!-- CAMBIAR IMAGEN: Reemplaza la URL por tu imagen -->
+                    <img src="/Webbissor design/IMAGENES/LOGOS/logo 1.png" alt="Logo Restaurante">
+                </div>
+                <div class="portfolio-content">
+                    <h4>"IronLion Studio"</h4>
+                    <p>Estilo moderno y minimalista con detalles metálicos y dorados.</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item">
+                <div class="portfolio-image">
+                    <!-- CAMBIAR IMAGEN: Reemplaza la URL por tu imagen -->
+                    <img src="/Webbissor design/IMAGENES/LOGOS/logo 2.png" alt="Logo Startup Tech">
+                </div>
+                <div class="portfolio-content">
+                    <h4>"WolfLine Design"</h4>
+                    <p>lobo geométrico y abstracto, en estilo vectorial.</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item">
+                <div class="portfolio-image">
+                    <!-- CAMBIAR IMAGEN: Reemplaza la URL por tu imagen -->
+                    <img src="/Webbissor design/IMAGENES/LOGOS/logo 3.png" alt="Logo Moda">
+                </div>
+                <div class="portfolio-content">
+                    <h4>"Draco Design"</h4>
+                    <p>dragón minimalista y símbolo que evoque poder y elegancia.</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item">
+                <div class="portfolio-image">
+                    <!-- CAMBIAR IMAGEN: Reemplaza la URL por tu imagen -->
+                    <img src="/Webbissor design/IMAGENES/LOGOS/logo 4.png" alt="Logo Consultoría">
+                </div>
+                <div class="portfolio-content">
+                    <h4>"Vertex Studio"</h4>
+                    <p>geométrico y con mucha presencia, tipo marca tecnológica y de diseño moderno.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Portafolio - Banners y Flayers -->
+    <section class="portfolio-section" id="portafolio-banners">
+        <div class="section-title">
+            <h2>Banners y Flayers</h2>
+            <p>Material publicitario que capta la atención y comunica efectivamente</p>
+        </div>
+        
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <div class="portfolio-image">
+                    <!-- CAMBIAR IMAGEN: Reemplaza la URL por tu imagen -->
+                    <img src="/Webbissor design/IMAGENES/Copia de Ecard  General/37.png" alt="Banner Web">
+                </div>
+                <div class="portfolio-content">
+                    <h4>🕸️ Challenge Halloween 2025</h4>
+                    <p>Un afiche vibrante y festivo que combina luces y sombras para reflejar la energía y el misterio de Halloween. Diseñado para captar la atención con tipografía moderna y un estilo dinámico.</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item">
+                <div class="portfolio-image">
+                    <!-- CAMBIAR IMAGEN: Reemplaza la URL por tu imagen -->
+                    <img src="/Webbissor design/IMAGENES/Copia de Ecard  General/40.png" alt="Flayer Evento">
+                </div>
+                <div class="portfolio-content">
+                    <h4>💃 Cartel de Danzas</h4>
+                    <p>Una composición que celebra la cultura colombiana a través del color, la alegría y el movimiento. El mapa del país y los elementos naturales refuerzan la identidad folclórica.</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item">
+                <div class="portfolio-image">
+                    <!-- CAMBIAR IMAGEN: Reemplaza la URL por tu imagen -->
+                    <img src="/Webbissor design/IMAGENES/Copia de Ecard  General/41.png" alt="Banner Redes Sociales">
+                </div>
+                <div class="portfolio-content">
+                    <h4>🎶 Cartel de Música</h4>
+                    <p>Diseño moderno que destaca la pasión por la música y el trabajo en equipo. Las luces y las fotos en conjunto crean una atmósfera inspiradora y artística.</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item">
+                <div class="portfolio-image">
+                    <!-- CAMBIAR IMAGEN: Reemplaza la URL por tu imagen -->
+                    <img src="/Webbissor design/IMAGENES/Copia de Ecard  General/50.png" alt="Flayer Promocional">
+                </div>
+                <div class="portfolio-content">
+                    <h4>🦜 Tercer Festival de Danzas Interfichas</h4>
+                    <p>Un afiche colorido y cultural que representa el orgullo colombiano. El fondo tropical y la integración de imágenes dan vida al folclor y la diversidad del evento.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contacto">
+        <div class="footer-content">
+            <div class="logo-container">
+                <img src="IMAGENES/Dise%C3%B1o%20sin%20t%C3%ADtulo.png" alt="Webissor Design" class="logo-img">
+                <div class="logo-text">Webissor Design</div>
+            </div>
+            <div class="social-links">
+                <a href="https://web.facebook.com/profile.php?id=61581867222479" class="social-link facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://wa.me/573249858782?text=%C2%A1Hola!%F0%9F%91%8B%20Me%20encantar%C3%ADa%20saber%20m%C3%A1s%20sobre%20los%20dise%C3%B1os%F0%9F%8E%A8%E2%9C%A8%20%C2%A1Se%20ven%20geniales!%F0%9F%94%A5%20%C2%BFPodr%C3%ADas%20darme%20m%C3%A1s%20info%20porfa?%F0%9F%98%8A" class="social-link whatsapp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <p class="copyright">© 2023 Webissor Design. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Efecto de scroll en el header
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Animación de elementos al hacer scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observar elementos para animación
+        document.addEventListener('DOMContentLoaded', function() {
+            const serviceCards = document.querySelectorAll('.service-card');
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+            
+            serviceCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(card);
+            });
+            
+            portfolioItems.forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(item);
+            });
+        });
+    </script>
+</body>
+</html>
